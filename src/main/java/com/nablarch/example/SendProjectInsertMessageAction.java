@@ -59,7 +59,7 @@ public class SendProjectInsertMessageAction extends BatchAction<SqlRow> {
         //
         // また、送信後は自動的に応答電文を待つ。
         // 応答電文の受信時には、「応答電文のフォーマット定義」に従って、フレームワークが電文の内容を取り出す。
-        final SyncMessage responseMessage;
+        SyncMessage responseMessage;
         try {
             responseMessage = MessageSender.sendSync(new SyncMessage("ProjectInsertMessage")
                     .addDataRecord(inputData));
@@ -69,6 +69,17 @@ public class SendProjectInsertMessageAction extends BatchAction<SqlRow> {
             throw new TransactionAbnormalEnd(100, e, "error.sendServer.fail");
         }
 
+        //Excelのリロードのテストにためにもう1回電文を送信する。
+        try {
+            responseMessage = MessageSender.sendSync(new SyncMessage("ProjectInsertMessage")
+                    .addDataRecord(inputData));
+
+        } catch (MessagingException e) {
+            // 送信エラー
+            throw new TransactionAbnormalEnd(100, e, "error.sendServer.fail");
+        }
+        
+        
         handleResponse(new ResponseData(responseMessage.getDataRecord()));
 
         //処理成功(ここに到達した場合は、returnCodeが"success"である)
