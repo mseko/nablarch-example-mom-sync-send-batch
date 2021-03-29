@@ -93,13 +93,12 @@
     -->
 
     <!-- TestDataParser -->
-    <component name="messagingTestDataParser" class="nablarch.test.core.reader.BasicTestDataParser">
+    <component name="messagingTestDataParser" class="nablarch.test.core.reader.CustomBasicTestDataParser">
         <property name="testDataReader">
             <component name="xlsReaderForPoi" class="nablarch.test.core.reader.PoiXlsReader"/>
         </property>
         <property name="interpreters" ref="messagingTestInterpreters" />
     </component>
-    <!-- テストデータ記法の解釈を行うクラス群  -->
     <list name="messagingTestInterpreters">
         <component class="nablarch.test.core.util.interpreter.NullInterpreter"/>
         <component class="nablarch.test.core.util.interpreter.QuotationTrimmer"/>
@@ -110,9 +109,27 @@
                 </list>
             </property>
         </component>
-    </list>    
-
-  <!-- 電文変換コンポーネント -->
+    </list>
+<!--
+    <component name="messagingTestDataParser" class="nablarch.test.core.reader.BasicTestDataParser">
+        <property name="testDataReader">
+            <component name="xlsReaderForPoi" class="nablarch.test.core.reader.PoiXlsReader"/>
+        </property>
+        <property name="interpreters" ref="messagingTestInterpreters" />
+    </component>
+    <list name="messagingTestInterpreters">
+        <component class="nablarch.test.core.util.interpreter.NullInterpreter"/>
+        <component class="nablarch.test.core.util.interpreter.QuotationTrimmer"/>
+        <component class="nablarch.test.core.util.interpreter.CompositeInterpreter">
+            <property name="interpreters">
+                <list>
+                    <component class="nablarch.test.core.util.interpreter.BasicJapaneseCharacterInterpreter"/>
+                </list>
+            </property>
+        </component>
+    </list>
+-->
+    <!-- 電文変換コンポーネント -->
   <component name="defaultSyncMessageConvertor"
              class="nablarch.fw.messaging.SyncMessageConvertor" />
   <!-- メッセージング用コンポーネント定義ここまで============================================================================================= -->
